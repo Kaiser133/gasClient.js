@@ -1,4 +1,4 @@
-const URL_API = 'https://script.google.com/macros/s/AKfycbwWQusZZzlQ6dOg074_sw3Wf4k8aABlPlTF5jNgtq2V8s4hU0unyZkF8_YWhR57U5iH/exec';
+const URL_API = 'https://script.google.com/macros/s/AKfycbwWQusZZzlQ6dOg074_sw3Wf4k8aABIPITF5jNgtq2V8s4hU0unyZkF8_YWhR57U5iH/exec';
 
 let tokenSesionLocal = localStorage.getItem('RESUELVE_TOKEN') || null;
 
@@ -35,4 +35,5 @@ export async function llamarAPI(accion, datos = {}) {
     console.error(`[API Error] ${accion}:`, err);
     throw err;
   }
+}
 }
