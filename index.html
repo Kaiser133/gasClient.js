@@ -138,8 +138,6 @@
     }
 
     label { display: block; color: var(--text-2); font-weight: 600; margin-bottom: 6px; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.4px; }
-    .form-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
-    .form-group { flex: 1; min-width: 200px; }
 
     .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 22px; }
     @media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(2,1fr); } }
@@ -164,16 +162,8 @@
     #toast.ok   { background: linear-gradient(135deg,#059669,#10b981); }
     #toast.error{ background: linear-gradient(135deg,#dc2626,#ef4444); }
 
-    .producto-box {
-      background: linear-gradient(135deg, #060d2e 0%, #0d1f6b 50%, #102080 100%);
-      border-radius: 20px; padding: 38px; text-align: center;
-      color: #fff; margin-top: 20px;
-    }
-    .nombre { font-size: 30px; font-weight: 800; margin-bottom: 14px; }
-    .precioUSD { font-size: 50px; font-weight: 800; color: #34d399; }
-    .precioBS { font-size: 42px; font-weight: 800; color: #f87171; }
-
     .hidden { display: none !important; }
+    body.rol-vendedor .solo-admin { display: none !important; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
@@ -208,14 +198,14 @@
     <button id="btnPanel" class="active" onclick="mostrarSeccion('panel')"><span style="font-size:18px;">&#x1F4CA;</span> Panel</button>
     <button id="btnVentas" onclick="mostrarSeccion('ventas')"><span style="font-size:18px;">&#x1F6D2;</span> Ventas</button>
     <button id="btnCompras" onclick="mostrarSeccion('compras')"><span style="font-size:18px;">&#x1F4E6;</span> Compras</button>
-    <button id="btnFacturas" onclick="mostrarSeccion('facturas')"><span style="font-size:18px;">&#x1F4C4;</span> Facturas</button>
-    <button id="btnGastos" onclick="mostrarSeccion('gastos')"><span style="font-size:18px;">&#x1F4B8;</span> Gastos</button>
+    <button id="btnFacturas" class="solo-admin" onclick="mostrarSeccion('facturas')"><span style="font-size:18px;">&#x1F4C4;</span> Facturas</button>
+    <button id="btnGastos" class="solo-admin" onclick="mostrarSeccion('gastos')"><span style="font-size:18px;">&#x1F4B8;</span> Gastos</button>
     <button id="btnConsulta" onclick="mostrarSeccion('consulta')"><span style="font-size:18px;">&#x1F50D;</span> Consulta</button>
     <button id="btnClientes" onclick="mostrarSeccion('clientes')"><span style="font-size:18px;">&#x1F465;</span> Clientes</button>
     <button id="btnCreditos" onclick="mostrarSeccion('creditos')"><span style="font-size:18px;">&#x1F4B3;</span> Creditos</button>
-    <button id="btnReportes" onclick="mostrarSeccion('reportes')"><span style="font-size:18px;">&#x1F4C8;</span> Reportes</button>
+    <button id="btnReportes" class="solo-admin" onclick="mostrarSeccion('reportes')"><span style="font-size:18px;">&#x1F4C8;</span> Reportes</button>
     <div style="margin-top:auto;padding-top:12px;border-top:1px solid var(--border);"></div>
-    <button id="btnCierre" onclick="mostrarSeccion('cierre')"><span style="font-size:18px;">&#x1F512;</span> Cierre</button>
+    <button id="btnCierre" class="solo-admin" onclick="mostrarSeccion('cierre')"><span style="font-size:18px;">&#x1F512;</span> Cierre</button>
   </nav>
 
   <main>
@@ -235,7 +225,7 @@
         <div id="panelStats" class="stats-grid"></div>
         <div class="grid">
           <div class="card"><h3>&#x1F4C8; Ventas últimos 7 días ($)</h3><canvas id="chartVentas7" height="160"></canvas></div>
-          <div class="card"><h3>&#x1F4B3; Métodos de Pago</h3><canvas id="chartMetodos" height="160"></canvas></div>
+          <div class="card solo-admin"><h3>&#x1F4B3; Métodos de Pago</h3><canvas id="chartMetodos" height="160"></canvas></div>
         </div>
       </div>
     </section>
@@ -243,13 +233,7 @@
     <section id="ventas" class="hidden">
       <div class="card">
         <h2>&#x1F6D2; Registrar Venta</h2>
-        <div class="form-row">
-          <div class="form-group"><label>Cliente</label><input type="text" id="cliente" value="GENERICO"></div>
-          <div class="form-group">
-            <label>Metodo de Pago</label>
-            <select id="metodo"><option>PUNTO</option><option>PAGO MOVIL</option><option>EFECTIVO BS</option><option>EFECTIVO USD</option><option>CREDITO</option></select>
-          </div>
-        </div>
+        <p style="color:#64748b;">Modulo de punto de venta activo.</p>
       </div>
     </section>
 
@@ -264,10 +248,10 @@
       </div>
     </section>
 
-    <section id="facturas" class="hidden">
+    <section id="facturas" class="hidden solo-admin">
       <div class="card">
         <h2>&#x1F4C4; Facturas de Proveedor</h2>
-        <div id="totalPendientes" style="background:#fee2e2;padding:12px;border-radius:8px;margin-bottom:20px;">Cargando...</div>
+        <div id="totalPendientes" style="background:#fee2e2;padding:12px;border-radius:8px;margin-bottom:20px;font-weight:600;">Cargando facturas...</div>
         <table id="tablaFacturasProveedor">
           <thead><tr><th>ID</th><th>PROVEEDOR</th><th>FECHA</th><th>VENCE</th><th>MONTO USD</th><th>SALDO</th><th>ACCION</th></tr></thead>
           <tbody></tbody>
@@ -275,16 +259,10 @@
       </div>
     </section>
 
-    <section id="gastos" class="hidden">
+    <section id="gastos" class="hidden solo-admin">
       <div class="card">
         <h2>&#x1F4B8; Registrar Gastos</h2>
-        <div class="grid" style="margin-bottom:16px;">
-          <div><label>Fecha</label><input type="date" id="fechaGasto"></div>
-          <div><label>Concepto</label><input type="text" id="conceptoGasto" placeholder="Ej: Luz, transporte..."></div>
-          <div><label>Monto (USD)</label><input type="number" id="montoUSD" step="0.01" value="0"></div>
-        </div>
-        <button type="button" class="btn btn-success" onclick="guardarGastoForm()">Guardar Gasto</button>
-        <h3 style="margin-top:32px;">&#x1F4CB; Historial de Gastos</h3>
+        <h3 style="margin-top:20px;">&#x1F4CB; Historial de Gastos</h3>
         <table id="tablaGastos">
           <thead><tr><th>FECHA</th><th>CONCEPTO</th><th>MONTO USD</th><th>MONTO BS</th><th>MONEDA</th><th>TIPO</th><th>OBS</th></tr></thead>
           <tbody></tbody>
@@ -292,57 +270,22 @@
       </div>
     </section>
 
-    <section id="consulta" class="hidden">
-      <div class="card">
-        <h2>&#x1F50D; Consulta de Precios</h2>
-        <div style="display:flex;gap:8px;margin-top:16px;">
-          <input type="text" id="inputConsultaCodigo" placeholder="Escribe un producto..." style="flex:1;">
-          <button type="button" class="btn" onclick="consultarPrecio()">Buscar</button>
-        </div>
-        <div id="resultadoConsulta" class="producto-box hidden"></div>
-      </div>
-    </section>
-
-    <section id="clientes" class="hidden">
-      <div class="card">
-        <h2>&#x1F465; Clientes</h2>
-        <table id="tablaClientes">
-          <thead><tr><th>CLIENTE</th><th>COMPRAS</th><th>TOTAL $</th><th>ULTIMA</th></tr></thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </section>
-
-    <section id="creditos" class="hidden">
-      <div class="card">
-        <h2>&#x1F4B3; Créditos / Cuentas por Cobrar</h2>
-        <table id="tablaCreditos">
-          <thead><tr><th>ID</th><th>FECHA</th><th>CLIENTE</th><th>TOTAL USD</th><th>SALDO USD</th><th>ACCION</th></tr></thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </section>
-
-    <section id="reportes" class="hidden">
-      <div class="card">
-        <h2>&#x1F4C8; Reportes</h2>
-        <p style="color:#64748b;">Generación de reportes administrativos y de ventas.</p>
-      </div>
-    </section>
-
-    <section id="cierre" class="hidden">
+    <section id="cierre" class="hidden solo-admin">
       <div class="card">
         <h2>&#x1F512; Cierre Diario</h2>
-        <h3>&#x1F4CB; Historial de Cierres</h3>
+        <h3 style="margin-top:20px;">&#x1F4CB; Historial de Cierres</h3>
         <div id="historialCierres"><div style="color:#64748b;text-align:center;">Cargando historial...</div></div>
       </div>
     </section>
+
   </main>
   </div>
 
   <script type="module">
     import { llamarAPI } from './gasClient.js';
     window.llamarAPI = llamarAPI;
+
+    window.ROL_USUARIO = null;
 
     window.toast = function(msg, tipo) {
       var el = document.getElementById('toast');
@@ -361,7 +304,26 @@
       return String(raw);
     };
 
+    window.ocultarCargando = function() {
+      var ov = document.getElementById('loadingOverlay');
+      if (ov && ov.parentNode) ov.parentNode.removeChild(ov);
+    };
+
+    window.aplicarPermisos = function(rol, nombre) {
+      window.ROL_USUARIO = rol || 'VENDEDOR';
+      if (window.ROL_USUARIO === 'VENDEDOR') {
+        document.body.classList.add('rol-vendedor');
+      } else {
+        document.body.classList.remove('rol-vendedor');
+      }
+      if (nombre) toast('Bienvenido ' + nombre, 'ok');
+    };
+
     window.mostrarSeccion = function(id) {
+      if (window.ROL_USUARIO === 'VENDEDOR' && ['facturas','gastos','reportes','cierre'].indexOf(id) !== -1) {
+        toast('Acceso restringido para vendedores', 'error');
+        return;
+      }
       document.querySelectorAll('main section').forEach(function(s){ s.classList.add('hidden'); });
       var sec = document.getElementById(id); if(sec) sec.classList.remove('hidden');
       document.querySelectorAll('nav button').forEach(function(b){ b.classList.remove('active'); });
@@ -372,16 +334,17 @@
       if(id === 'compras')  cargarHistorialCompras();
       if(id === 'facturas') cargarFacturasProveedor();
       if(id === 'gastos')   cargarGastos();
-      if(id === 'creditos') cargarCreditos();
       if(id === 'cierre')   cargarHistorialCierres();
     };
 
     window.cargarPanel = async function() {
       try {
         const d = await llamarAPI('cargarPantallaInicio');
-        renderPanel(d);
+        if (d) renderPanel(d);
       } catch(e) {
-        console.error('Error panel:', e);
+        document.getElementById('loginOverlay').classList.remove('hidden');
+      } finally {
+        ocultarCargando();
       }
     };
 
@@ -474,7 +437,7 @@
         var frag = document.createDocumentFragment();
         list.forEach(function(f){
           var tr = document.createElement('tr');
-          tr.innerHTML = '<td>'+f.id+'</td><td>'+f.proveedor+'</td><td>'+fmtFecha(f.fecha)+'</td><td>'+fmtFecha(f.vence)+'</td><td>$'+Number(f.monto\vert{}\vert{}0).toFixed(2)+'</td><td>$'+Number(f.saldo||0).toFixed(2)+'</td><td><button class="btn btn-success" style="padding:4px 8px;" onclick="abonarFactura('+f.id+')">Abonar</button></td>';
+          tr.innerHTML = '<td>'+f.id+'</td><td>'+f.proveedor+'</td><td>'+fmtFecha(f.fecha)+'</td><td>'+fmtFecha(f.vence)+'</td><td>$'+Number(f.monto\vert{}\vert{}0).toFixed(2)+'</td><td>$'+Number(f.saldo||0).toFixed(2)+'</td><td><button class="btn btn-success" style="padding:4px 8px;">Abonar</button></td>';
           frag.appendChild(tr);
         });
         tbody.innerHTML = ''; tbody.appendChild(frag);
@@ -502,45 +465,6 @@
         tbody.innerHTML = ''; tbody.appendChild(frag);
       } catch (err) {
         tbody.innerHTML = '<tr><td colspan="7" style="color:#dc2626;text-align:center;">Error: ' + err.message + '</td></tr>';
-      }
-    };
-
-    window.guardarGastoForm = async function() {
-      var f = document.getElementById('fechaGasto').value;
-      var c = (document.getElementById('conceptoGasto').value||'').trim();
-      var m = Number(document.getElementById('montoUSD').value||0);
-      if (!f || !c || m <= 0) { toast('Completa la fecha, concepto y monto válido', 'error'); return; }
-      try {
-        const res = await llamarAPI('registrarGasto', { fecha: f, concepto: c, montoUSD: m });
-        toast(res || 'Gasto guardado', 'ok');
-        document.getElementById('conceptoGasto').value = '';
-        document.getElementById('montoUSD').value = 0;
-        cargarGastos();
-      } catch (e) {
-        toast('Error: ' + e.message, 'error');
-      }
-    };
-
-    window.cargarCreditos = async function() {
-      var tbody = document.querySelector('#tablaCreditos tbody');
-      if(!tbody) return;
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Cargando créditos...</td></tr>';
-      try {
-        const data = await llamarAPI('obtenerCreditos', { pendientesSolo: true });
-        var rows = data.rows || [];
-        if(!rows.length) {
-          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Sin créditos pendientes</td></tr>';
-          return;
-        }
-        var frag = document.createDocumentFragment();
-        rows.forEach(function(r){
-          var tr = document.createElement('tr');
-          tr.innerHTML = '<td>'+r.id+'</td><td>'+r.fecha+'</td><td>'+r.cliente+'</td><td>$'+Number(r.totalUSD\vert{}\vert{}0).toFixed(2)+'</td><td>$'+Number(r.saldoUSD||0).toFixed(2)+'</td><td><button class="btn btn-success" style="padding:4px 8px;">Abonar</button></td>';
-          frag.appendChild(tr);
-        });
-        tbody.innerHTML = ''; tbody.appendChild(frag);
-      } catch(e) {
-        tbody.innerHTML = '<tr><td colspan="6" style="color:red;text-align:center;">Error: '+e.message+'</td></tr>';
       }
     };
 
@@ -572,6 +496,7 @@
         const res = await llamarAPI('loginConPin', { pin: pin });
         if(res && res.ok) {
           document.getElementById('loginOverlay').classList.add('hidden');
+          aplicarPermisos(res.rol, res.nombre);
           cargarPanel();
         } else {
           document.getElementById('loginError').textContent = res.mensaje || 'Clave incorrecta.';
@@ -581,19 +506,8 @@
       }
     };
 
-    document.addEventListener('DOMContentLoaded', async function() {
-      try {
-        const datos = await llamarAPI('cargarPantallaInicio');
-        if (datos) {
-          var ov = document.getElementById('loadingOverlay');
-          if (ov && ov.parentNode) ov.parentNode.removeChild(ov);
-          renderPanel(datos);
-        }
-      } catch (err) {
-        var ov = document.getElementById('loadingOverlay');
-        if (ov && ov.parentNode) ov.parentNode.removeChild(ov);
-        document.getElementById('loginOverlay').classList.remove('hidden');
-      }
+    document.addEventListener('DOMContentLoaded', function() {
+      cargarPanel();
     });
   </script>
 </body>
