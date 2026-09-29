@@ -1,4 +1,4 @@
-const URL_API = 'https://script.google.com/macros/s/AKfycbwJaNPHe26e9N5PKAnfio9-A2EiFWc7tagA4IKOWyKWzEec1ZXRD5PC4i84r6YasEWt/exec';
+const URL_API = 'https://script.google.com/macros/s/AKfycbwWQusZZzlQ6dOg074_sw3Wf4k8aABIPITF5jNgtq2V8s4hU0unyZkF8_YWhR57U5iH/exec';
 
 let tokenSesionLocal = localStorage.getItem('RESUELVE_TOKEN') || null;
 
