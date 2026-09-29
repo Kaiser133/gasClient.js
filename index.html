@@ -18,34 +18,21 @@
       --accent:    #2563eb;
       --accent-2:  #1d4ed8;
       --accent-3:  #3b82f6;
-      --accent-ink:#1e3a8a;
       --green:     #059669;
-      --green-bd:  #059669;
-      --green-bg:  #f0fdf4;
       --red:       #dc2626;
       --slate:     #64748b;
-      --slate-bg:  #f8fafc;
-      --violet:    #7c3aed;
-      --violet-bd: #7c3aed;
-      --violet-bg: #f5f3ff;
-      --shadow-sm: 0 1px 2px rgba(16,32,72,0.06);
       --shadow:    0 1px 3px rgba(16,32,72,0.07), 0 8px 24px -8px rgba(16,32,72,0.12);
-      --shadow-lg: 0 12px 32px -8px rgba(16,32,72,0.22);
       --radius:    16px;
       --radius-sm: 10px;
-      --ring:      0 0 0 3px rgba(59,130,246,0.18);
     }
 
     * { box-sizing: border-box; }
 
     body {
-      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
-      background-attachment: fixed;
       color: var(--text);
       margin: 0; padding: 0;
-      -webkit-font-smoothing: antialiased;
-      font-size: 15px;
       display: flex; flex-direction: column; min-height: 100vh;
     }
 
@@ -53,16 +40,12 @@
       background: linear-gradient(135deg, #14306e 0%, #1e3a8a 45%, #2563eb 100%);
       color: #fff;
       padding: 16px 24px;
-      box-shadow: 0 4px 18px rgba(20,48,110,0.28);
-      z-index: 100;
       display: flex; align-items: center; gap: 14px;
-      flex-shrink: 0;
-      position: sticky; top: 0;
+      position: sticky; top: 0; z-index: 100;
     }
-    header img.logo { height: 42px; width: auto; object-fit: contain; background: #fff; padding: 5px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
-    header h1 { margin: 0; font-size: 20px; font-weight: 800; letter-spacing: -0.3px; }
+    header h1 { margin: 0; font-size: 20px; font-weight: 800; }
 
-    #appWrapper { display: flex; flex: 1; overflow: hidden; }
+    #appWrapper { display: flex; flex: 1; }
 
     nav {
       width: 212px; min-width: 212px;
@@ -71,28 +54,20 @@
       border-right: 1px solid var(--border);
       display: flex; flex-direction: column; gap: 4px;
       padding: 18px 12px;
-      position: sticky; top: 0;
-      height: calc(100vh - 74px);
-      overflow-y: auto;
     }
     nav button {
       border: none; background: transparent; color: #39455d;
       border-radius: 12px; padding: 12px 15px;
       font-weight: 600; cursor: pointer;
-      transition: background .15s ease, color .15s ease, transform .12s ease, box-shadow .15s ease;
       font-size: 15px; text-align: left;
       display: flex; align-items: center; gap: 11px; width: 100%;
     }
-    nav button:hover { background: #eaf1ff; color: var(--accent); transform: translateX(2px); }
     nav button.active {
       background: linear-gradient(135deg, var(--accent-2), var(--accent-3));
-      color: #fff; box-shadow: 0 6px 16px -4px rgba(37,99,235,0.55);
+      color: #fff;
     }
 
-    main { flex: 1; padding: 26px 30px; overflow-y: auto; height: calc(100vh - 74px); }
-
-    h2 { color: var(--text); margin-top: 0; font-size: 21px; font-weight: 800; letter-spacing: -0.3px; }
-    h3 { color: var(--text); margin-top: 0; font-size: 16px; font-weight: 700; }
+    main { flex: 1; padding: 26px 30px; }
 
     .card {
       background: var(--surface);
@@ -102,65 +77,42 @@
       margin-bottom: 18px;
       border: 1px solid var(--border);
     }
-    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 12px; flex-wrap: wrap; }
-
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
-
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-    th {
-      background: #eef3fb; color: var(--text-2);
-      text-align: left; padding: 11px 13px;
-      font-weight: 700; font-size: 11.5px;
-      text-transform: uppercase; letter-spacing: 0.5px;
-      border-bottom: 1px solid var(--border-2);
-      position: sticky; top: 0;
-    }
-    td { padding: 11px 13px; border-bottom: 1px solid var(--border); font-size: 14px; }
-    tr:hover td { background: #f5f9ff; }
-
-    .btn {
-      background: linear-gradient(135deg, var(--accent), var(--accent-3));
-      color: #fff; border: none; border-radius: var(--radius-sm);
-      padding: 10px 18px; cursor: pointer;
-      font-weight: 600; font-size: 14px; font-family: inherit;
-      transition: filter .15s, transform .12s, box-shadow .15s;
-      box-shadow: 0 2px 6px -1px rgba(37,99,235,0.4);
-    }
-    .btn-success { background: linear-gradient(135deg, #059669, #10b981); box-shadow: 0 2px 6px -1px rgba(5,150,105,0.4); }
-    .btn-secondary { background: linear-gradient(135deg, #475569, #64748b); box-shadow: 0 2px 6px -1px rgba(71,85,105,0.35); }
-
-    input, select {
-      border: 1.5px solid var(--border-2);
-      border-radius: var(--radius-sm);
-      padding: 10px 13px;
-      font-size: 15px; font-family: inherit;
-      width: 100%; background: var(--surface); color: var(--text);
-    }
-
-    label { display: block; color: var(--text-2); font-weight: 600; margin-bottom: 6px; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.4px; }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
 
     .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 22px; }
-    @media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(2,1fr); } }
-    @media (max-width: 560px) { .stats-grid { grid-template-columns: 1fr; } }
     .stat-card {
       background: var(--surface); border-radius: var(--radius);
       padding: 20px 22px; border: 1px solid var(--border);
       border-left: 5px solid var(--accent);
-      box-shadow: var(--shadow);
     }
-    .stat-label { color: var(--slate); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 10px; }
+    .stat-label { color: var(--slate); font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th { background: #eef3fb; color: var(--text-2); text-align: left; padding: 11px 13px; font-weight: 700; font-size: 11.5px; border-bottom: 1px solid var(--border-2); }
+    td { padding: 11px 13px; border-bottom: 1px solid var(--border); font-size: 14px; }
+
+    .btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent-3));
+      color: #fff; border: none; border-radius: var(--radius-sm);
+      padding: 10px 18px; cursor: pointer; font-weight: 600; font-size: 14px;
+    }
+    .btn-secondary { background: linear-gradient(135deg, #475569, #64748b); }
+
+    input {
+      border: 1.5px solid var(--border-2); border-radius: var(--radius-sm);
+      padding: 10px 13px; font-size: 15px; width: 100%; background: var(--surface);
+    }
 
     #toast {
       position: fixed; bottom: 24px; right: 24px;
       padding: 14px 20px; border-radius: 12px;
       font-weight: 600; font-size: 14px; color: #fff;
       z-index: 9999; transform: translateY(80px); opacity: 0;
-      transition: all .25s ease; max-width: 360px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.22); pointer-events: none;
+      transition: all .25s ease;
     }
     #toast.show { transform: translateY(0); opacity: 1; }
-    #toast.ok   { background: linear-gradient(135deg,#059669,#10b981); }
-    #toast.error{ background: linear-gradient(135deg,#dc2626,#ef4444); }
+    #toast.ok   { background: #059669; }
+    #toast.error{ background: #dc2626; }
 
     .hidden { display: none !important; }
     body.rol-vendedor .solo-admin { display: none !important; }
@@ -170,7 +122,6 @@
 <body>
   <div id="toast"></div>
   <header>
-    <img class="logo" src="https://lh3.googleusercontent.com/d/1Se8btntWLbq3jiL70TM4sUxz8VuyGZ1w" alt="Logo La Fortaleza" onerror="this.style.display='none'" />
     <h1>&#x1F4B8; EL RESUELVE DE LA FORTALEZA</h1>
   </header>
 
@@ -192,20 +143,12 @@
 
   <div id="appWrapper">
   <nav>
-    <div style="padding:4px 8px 16px;border-bottom:1px solid var(--border);margin-bottom:12px;">
-      <div style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;">Menu</div>
-    </div>
-    <button id="btnPanel" class="active" onclick="mostrarSeccion('panel')"><span style="font-size:18px;">&#x1F4CA;</span> Panel</button>
-    <button id="btnVentas" onclick="mostrarSeccion('ventas')"><span style="font-size:18px;">&#x1F6D2;</span> Ventas</button>
-    <button id="btnCompras" onclick="mostrarSeccion('compras')"><span style="font-size:18px;">&#x1F4E6;</span> Compras</button>
-    <button id="btnFacturas" class="solo-admin" onclick="mostrarSeccion('facturas')"><span style="font-size:18px;">&#x1F4C4;</span> Facturas</button>
-    <button id="btnGastos" class="solo-admin" onclick="mostrarSeccion('gastos')"><span style="font-size:18px;">&#x1F4B8;</span> Gastos</button>
-    <button id="btnConsulta" onclick="mostrarSeccion('consulta')"><span style="font-size:18px;">&#x1F50D;</span> Consulta</button>
-    <button id="btnClientes" onclick="mostrarSeccion('clientes')"><span style="font-size:18px;">&#x1F465;</span> Clientes</button>
-    <button id="btnCreditos" onclick="mostrarSeccion('creditos')"><span style="font-size:18px;">&#x1F4B3;</span> Creditos</button>
-    <button id="btnReportes" class="solo-admin" onclick="mostrarSeccion('reportes')"><span style="font-size:18px;">&#x1F4C8;</span> Reportes</button>
-    <div style="margin-top:auto;padding-top:12px;border-top:1px solid var(--border);"></div>
-    <button id="btnCierre" class="solo-admin" onclick="mostrarSeccion('cierre')"><span style="font-size:18px;">&#x1F512;</span> Cierre</button>
+    <button id="btnPanel" class="active" onclick="mostrarSeccion('panel')">&#x1F4CA; Panel</button>
+    <button id="btnVentas" onclick="mostrarSeccion('ventas')">&#x1F6D2; Ventas</button>
+    <button id="btnCompras" onclick="mostrarSeccion('compras')">&#x1F4E6; Compras</button>
+    <button id="btnFacturas" class="solo-admin" onclick="mostrarSeccion('facturas')">&#x1F4C4; Facturas</button>
+    <button id="btnGastos" class="solo-admin" onclick="mostrarSeccion('gastos')">&#x1F4B8; Gastos</button>
+    <button id="btnCierre" class="solo-admin" onclick="mostrarSeccion('cierre')">&#x1F512; Cierre</button>
   </nav>
 
   <main>
@@ -215,32 +158,21 @@
           <h2>&#x1F4CA; Panel de Control</h2>
           <button class="btn btn-secondary" onclick="cargarPanel()">&#x1F504; Actualizar</button>
         </div>
-        <div style="background:linear-gradient(135deg,#eff6ff,#f5f3ff);padding:14px 18px;border-radius:10px;margin-bottom:18px;border:1px solid #dbeafe;display:flex;justify-content:space-between;align-items:center;">
-          <div>
-            <span style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;">Tasa BCV: </span>
-            <span id="tasaBCV" style="font-size:28px;font-weight:800;color:#2563eb;">--</span> Bs/$
-            <span style="font-size:12px;color:#94a3b8;margin-left:8px;">(<span id="fechaBCV">--</span>)</span>
-          </div>
+        <div style="background:#eff6ff;padding:14px 18px;border-radius:10px;margin-bottom:18px;border:1px solid #dbeafe;">
+          <span style="font-size:11px;font-weight:700;color:#64748b;">TASA BCV: </span>
+          <span id="tasaBCV" style="font-size:28px;font-weight:800;color:#2563eb;">--</span> Bs/$
         </div>
         <div id="panelStats" class="stats-grid"></div>
-        <div class="grid">
-          <div class="card"><h3>&#x1F4C8; Ventas últimos 7 días ($)</h3><canvas id="chartVentas7" height="160"></canvas></div>
-          <div class="card solo-admin"><h3>&#x1F4B3; Métodos de Pago</h3><canvas id="chartMetodos" height="160"></canvas></div>
-        </div>
       </div>
     </section>
 
     <section id="ventas" class="hidden">
-      <div class="card">
-        <h2>&#x1F6D2; Registrar Venta</h2>
-        <p style="color:#64748b;">Modulo de punto de venta activo.</p>
-      </div>
+      <div class="card"><h2>&#x1F6D2; Ventas</h2><p style="color:#64748b;">Modulo listo.</p></div>
     </section>
 
     <section id="compras" class="hidden">
       <div class="card">
-        <h2>&#x1F4E6; Registro de Compras</h2>
-        <h3 style="margin-top:20px;">&#x1F4CB; Historial Reciente</h3>
+        <h2>&#x1F4E6; Historial de Compras</h2>
         <table id="tablaCompras">
           <thead><tr><th>ID</th><th>FECHA</th><th>PROVEEDOR</th><th>PRODUCTO</th><th>CANT.</th><th>COSTO</th><th>TOTAL</th></tr></thead>
           <tbody></tbody>
@@ -250,10 +182,9 @@
 
     <section id="facturas" class="hidden solo-admin">
       <div class="card">
-        <h2>&#x1F4C4; Facturas de Proveedor</h2>
-        <div id="totalPendientes" style="background:#fee2e2;padding:12px;border-radius:8px;margin-bottom:20px;font-weight:600;">Cargando facturas...</div>
+        <h2>&#x1F4C4; Facturas Pendientes</h2>
         <table id="tablaFacturasProveedor">
-          <thead><tr><th>ID</th><th>PROVEEDOR</th><th>FECHA</th><th>VENCE</th><th>MONTO USD</th><th>SALDO</th><th>ACCION</th></tr></thead>
+          <thead><tr><th>ID</th><th>PROVEEDOR</th><th>FECHA</th><th>VENCE</th><th>MONTO USD</th><th>SALDO</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
@@ -261,10 +192,9 @@
 
     <section id="gastos" class="hidden solo-admin">
       <div class="card">
-        <h2>&#x1F4B8; Registrar Gastos</h2>
-        <h3 style="margin-top:20px;">&#x1F4CB; Historial de Gastos</h3>
+        <h2>&#x1F4B8; Historial de Gastos</h2>
         <table id="tablaGastos">
-          <thead><tr><th>FECHA</th><th>CONCEPTO</th><th>MONTO USD</th><th>MONTO BS</th><th>MONEDA</th><th>TIPO</th><th>OBS</th></tr></thead>
+          <thead><tr><th>FECHA</th><th>CONCEPTO</th><th>MONTO USD</th><th>MONTO BS</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
@@ -273,35 +203,22 @@
     <section id="cierre" class="hidden solo-admin">
       <div class="card">
         <h2>&#x1F512; Cierre Diario</h2>
-        <h3 style="margin-top:20px;">&#x1F4CB; Historial de Cierres</h3>
-        <div id="historialCierres"><div style="color:#64748b;text-align:center;">Cargando historial...</div></div>
+        <div id="historialCierres"><div style="color:#64748b;">Cargando...</div></div>
       </div>
     </section>
-
   </main>
   </div>
 
   <script type="module">
     import { llamarAPI } from './gasClient.js';
     window.llamarAPI = llamarAPI;
-
-    window.ROL_USUARIO = null;
+    window.ROL_USUARIO = 'VENDEDOR';
 
     window.toast = function(msg, tipo) {
       var el = document.getElementById('toast');
       if(!el) return;
-      el.textContent = msg;
-      el.className = 'show ' + (tipo || 'ok');
+      el.textContent = msg; el.className = 'show ' + (tipo || 'ok');
       setTimeout(function(){ el.className = ''; }, 3000);
-    };
-
-    window.fmtFecha = function(raw) {
-      if(!raw) return '';
-      var d = new Date(raw);
-      if(!isNaN(d.getTime())) {
-        return String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear();
-      }
-      return String(raw);
     };
 
     window.ocultarCargando = function() {
@@ -320,10 +237,6 @@
     };
 
     window.mostrarSeccion = function(id) {
-      if (window.ROL_USUARIO === 'VENDEDOR' && ['facturas','gastos','reportes','cierre'].indexOf(id) !== -1) {
-        toast('Acceso restringido para vendedores', 'error');
-        return;
-      }
       document.querySelectorAll('main section').forEach(function(s){ s.classList.add('hidden'); });
       var sec = document.getElementById(id); if(sec) sec.classList.remove('hidden');
       document.querySelectorAll('nav button').forEach(function(b){ b.classList.remove('active'); });
@@ -340,7 +253,16 @@
     window.cargarPanel = async function() {
       try {
         const d = await llamarAPI('cargarPantallaInicio');
-        if (d) renderPanel(d);
+        if (d) {
+          document.getElementById('tasaBCV').textContent = Number(d.tasaBCV||0).toFixed(2);
+          var stats = document.getElementById('panelStats');
+          stats.innerHTML = `
+            <div class="stat-card" style="border-left-color:#059669;"><div class="stat-label">Ventas Hoy</div><div style="font-size:28px;font-weight:800;color:#059669;">$${Number(d.totalUSD_Hoy||0).toFixed(2)}</div></div>
+            <div class="stat-card" style="border-left-color:#2563eb;"><div class="stat-label">Ingresos Caja</div><div style="font-size:28px;font-weight:800;color:#2563eb;">$${Number(d.ingresosHoyUSD||0).toFixed(2)}</div></div>
+            <div class="stat-card" style="border-left-color:#dc2626;"><div class="stat-label">Egresos Hoy</div><div style="font-size:28px;font-weight:800;color:#dc2626;">$${Number(d.egresosCajaHoyUSD||0).toFixed(2)}</div></div>
+            <div class="stat-card" style="border-left-color:#7c3aed;"><div class="stat-label">Créditos Pendientes</div><div style="font-size:28px;font-weight:800;color:#7c3aed;">$${Number(d.creditosPendientesUSD||0).toFixed(2)}</div></div>
+          `;
+        }
       } catch(e) {
         document.getElementById('loginOverlay').classList.remove('hidden');
       } finally {
@@ -348,144 +270,70 @@
       }
     };
 
-    window.renderPanel = function(d) {
-      document.getElementById('tasaBCV').textContent = Number(d.tasaBCV||0).toFixed(2);
-      document.getElementById('fechaBCV').textContent = d.fechaTasa || '--';
-
-      var stats = document.getElementById('panelStats');
-      stats.innerHTML = `
-        <div class="stat-card" style="border-left-color:#059669;">
-          <div class="stat-label">&#x1F4B0; Ventas del Dia</div>
-          <div style="font-size:32px;font-weight:800;color:#059669;">$${Number(d.totalUSD_Hoy||0).toFixed(2)}</div>
-        </div>
-        <div class="stat-card" style="border-left-color:#2563eb;">
-          <div class="stat-label">&#x1F4B5; Ingresos Caja</div>
-          <div style="font-size:32px;font-weight:800;color:#2563eb;">$${Number(d.ingresosHoyUSD||0).toFixed(2)}</div>
-          <div style="font-size:13px;color:#64748b;">Bs ${Number(d.ingresosHoyBS||0).toFixed(2)}</div>
-        </div>
-        <div class="stat-card" style="border-left-color:#dc2626;">
-          <div class="stat-label">&#x1F4C9; Egresos del Dia</div>
-          <div style="font-size:32px;font-weight:800;color:#dc2626;">$${Number(d.egresosCajaHoyUSD||0).toFixed(2)}</div>
-          <div style="font-size:13px;color:#64748b;">Bs ${Number(d.egresosCajaHoyBS||0).toFixed(2)}</div>
-        </div>
-        <div class="stat-card" style="border-left-color:#7c3aed;">
-          <div class="stat-label">&#x1F4B3; Creditos Pendientes</div>
-          <div style="font-size:26px;font-weight:800;color:#7c3aed;">$${Number(d.creditosPendientesUSD||0).toFixed(2)}</div>
-          <div style="font-size:13px;color:#0891b2;">Bs ${Number(d.creditosPendientesBS||0).toFixed(2)}</div>
-        </div>
-      `;
-
-      if (window.chartV7) window.chartV7.destroy();
-      var ctx7 = document.getElementById('chartVentas7');
-      if (ctx7 && d.ventas7Dias) {
-        window.chartV7 = new Chart(ctx7, {
-          type: 'line',
-          data: {
-            labels: d.ventas7Dias.map(function(x){ return x.fecha; }),
-            datasets: [{ label: 'Ventas ($)', data: d.ventas7Dias.map(function(x){ return x.monto; }), borderColor: '#2563eb', tension: 0.3, fill: true, backgroundColor: 'rgba(37,99,235,0.1)' }]
-          },
-          options: { responsive: true, plugins: { legend: { display: false } } }
-        });
-      }
-
-      if (window.chartMetodos) window.chartMetodos.destroy();
-      var ctxM = document.getElementById('chartMetodos');
-      if (ctxM && d.metodos30Dias) {
-        window.chartMetodos = new Chart(ctxM, {
-          type: 'doughnut',
-          data: {
-            labels: d.metodos30Dias.map(function(x){ return x.metodo; }),
-            datasets: [{ data: d.metodos30Dias.map(function(x){ return x.monto; }), backgroundColor: ['#2563eb','#059669','#7c3aed','#f59e0b','#dc2626'] }]
-          },
-          options: { responsive: true }
-        });
-      }
-    };
-
     window.cargarHistorialCompras = async function() {
       var tbody = document.querySelector('#tablaCompras tbody');
       if (!tbody) return;
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#64748b;">Cargando historial...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Cargando...</td></tr>';
       try {
         const list = await llamarAPI('obtenerHistorialCompras');
-        if (!list || !Array.isArray(list) || !list.length) {
-          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#64748b;">Sin compras registradas</td></tr>';
-          return;
-        }
-        var frag = document.createDocumentFragment();
-        list.forEach(function(c) {
+        tbody.innerHTML = '';
+        (list || []).forEach(function(c) {
           var tr = document.createElement('tr');
-          tr.innerHTML = '<td>' + (c.id || '') + '</td><td>' + fmtFecha(c.fecha) + '</td><td>' + (c.proveedor || '') + '</td><td>' + (c.producto || '') + '</td><td>' + (c.cant || 0) + '</td><td>$' + Number(c.costo \vert{}\vert{} 0).toFixed(2) + '</td><td>$' + Number(c.total || 0).toFixed(2) + '</td>';
-          frag.appendChild(tr);
+          tr.innerHTML = '<td>'+(c.id||'')+'</td><td>'+(c.fecha||'')+'</td><td>'+(c.proveedor||'')+'</td><td>'+(c.producto||'')+'</td><td>'+(c.cant||0)+'</td><td>$'+Number(c.costo\vert{}\vert{}0).toFixed(2)+'</td><td>$'+Number(c.total||0).toFixed(2)+'</td>';
+          tbody.appendChild(tr);
         });
-        tbody.innerHTML = ''; tbody.appendChild(frag);
-      } catch (err) {
-        tbody.innerHTML = '<tr><td colspan="7" style="color:#dc2626;text-align:center;">Error: ' + err.message + '</td></tr>';
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="7" style="color:red;text-align:center;">Error al cargar</td></tr>';
       }
     };
 
     window.cargarFacturasProveedor = async function() {
       var tbody = document.querySelector('#tablaFacturasProveedor tbody');
-      if(!tbody) return;
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Cargando facturas...</td></tr>';
+      if (!tbody) return;
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Cargando...</td></tr>';
       try {
         const list = await llamarAPI('obtenerFacturasProveedor', { pendientesSolo: true });
-        if(!list || !list.length) {
-          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Sin facturas pendientes</td></tr>';
-          return;
-        }
-        var frag = document.createDocumentFragment();
-        list.forEach(function(f){
+        tbody.innerHTML = '';
+        (list || []).forEach(function(f) {
           var tr = document.createElement('tr');
-          tr.innerHTML = '<td>'+f.id+'</td><td>'+f.proveedor+'</td><td>'+fmtFecha(f.fecha)+'</td><td>'+fmtFecha(f.vence)+'</td><td>$'+Number(f.monto\vert{}\vert{}0).toFixed(2)+'</td><td>$'+Number(f.saldo||0).toFixed(2)+'</td><td><button class="btn btn-success" style="padding:4px 8px;">Abonar</button></td>';
-          frag.appendChild(tr);
+          tr.innerHTML = '<td>'+f.id+'</td><td>'+f.proveedor+'</td><td>'+f.fecha+'</td><td>'+f.vence+'</td><td>$'+Number(f.monto\vert{}\vert{}0).toFixed(2)+'</td><td>$'+Number(f.saldo||0).toFixed(2)+'</td>';
+          tbody.appendChild(tr);
         });
-        tbody.innerHTML = ''; tbody.appendChild(frag);
-      } catch(e) {
-        tbody.innerHTML = '<tr><td colspan="7" style="color:red;text-align:center;">Error: '+e.message+'</td></tr>';
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="6" style="color:red;text-align:center;">Error al cargar</td></tr>';
       }
     };
 
     window.cargarGastos = async function() {
       var tbody = document.querySelector('#tablaGastos tbody');
       if (!tbody) return;
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#64748b;">Cargando gastos...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Cargando...</td></tr>';
       try {
         const list = await llamarAPI('obtenerHistorialGastos');
-        if (!list || !Array.isArray(list) || !list.length) {
-          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#64748b;">Sin gastos registrados</td></tr>';
-          return;
-        }
-        var frag = document.createDocumentFragment();
-        list.forEach(function(g) {
+        tbody.innerHTML = '';
+        (list || []).forEach(function(g) {
           var tr = document.createElement('tr');
-          tr.innerHTML = '<td>'+fmtFecha(g.fecha)+'</td><td>'+(g.concepto||'')+'</td><td>$'+Number(g.montoUSD||0).toFixed(2)+'</td><td>Bs '+Number(g.montoBS||0).toFixed(2)+'</td><td>'+(g.moneda||'USD')+'</td><td>'+(g.tipo||'GASTO')+'</td><td>'+(g.obs||'')+'</td>';
-          frag.appendChild(tr);
+          tr.innerHTML = '<td>'+g.fecha+'</td><td>'+g.concepto+'</td><td>$'+Number(g.montoUSD||0).toFixed(2)+'</td><td>Bs '+Number(g.montoBS||0).toFixed(2)+'</td>';
+          tbody.appendChild(tr);
         });
-        tbody.innerHTML = ''; tbody.appendChild(frag);
-      } catch (err) {
-        tbody.innerHTML = '<tr><td colspan="7" style="color:#dc2626;text-align:center;">Error: ' + err.message + '</td></tr>';
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="4" style="color:red;text-align:center;">Error al cargar</td></tr>';
       }
     };
 
     window.cargarHistorialCierres = async function() {
       var cont = document.getElementById('historialCierres');
       if (!cont) return;
-      cont.innerHTML = '<div style="color:#64748b;text-align:center;">Cargando historial...</div>';
       try {
         const list = await llamarAPI('obtenerHistorialCierres');
-        if (!list || !Array.isArray(list) || !list.length) {
-          cont.innerHTML = '<div style="text-align:center;color:#64748b;padding:12px;">Sin cierres registrados.</div>';
-          return;
-        }
-        var html = '<table><thead><tr><th>FECHA</th><th>RESPONSABLE</th><th>TOTAL BS</th><th>TOTAL USD</th><th>PUNTO</th><th>PAGO MÓVIL</th></tr></thead><tbody>';
-        list.forEach(function(h) {
-          html += '<tr><td>'+fmtFecha(h.fecha)+'</td><td>'+(h.responsable||'')+'</td><td>Bs '+Number(h.totalBS||0).toFixed(2)+'</td><td>$'+Number(h.totalUSD||0).toFixed(2)+'</td><td>Bs '+Number(h.punto||0).toFixed(2)+'</td><td>Bs '+Number(h.pagoMovil||0).toFixed(2)+'</td></tr>';
+        var html = '<table><thead><tr><th>FECHA</th><th>RESPONSABLE</th><th>TOTAL BS</th><th>TOTAL USD</th></tr></thead><tbody>';
+        (list || []).forEach(function(h) {
+          html += '<tr><td>'+h.fecha+'</td><td>'+h.responsable+'</td><td>Bs '+Number(h.totalBS||0).toFixed(2)+'</td><td>$'+Number(h.totalUSD||0).toFixed(2)+'</td></tr>';
         });
         html += '</tbody></table>';
         cont.innerHTML = html;
-      } catch (err) {
-        cont.innerHTML = '<div style="color:#dc2626;text-align:center;">Error: ' + err.message + '</div>';
+      } catch (e) {
+        cont.innerHTML = '<div style="color:red;">Error al cargar cierres</div>';
       }
     };
 
