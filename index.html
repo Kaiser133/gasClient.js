@@ -23,18 +23,14 @@
     .card-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 10px; color: #334155; display: flex; justify-content: space-between; align-items: center; }
 
     .search-box { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; margin-bottom: 10px; outline: none; }
-    .search-box:focus { border-color: #2563eb; }
-
     .prod-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; max-height: 250px; overflow-y: auto; margin-bottom: 10px; }
-    .prod-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; cursor: pointer; background: #fff; transition: background 0.1s; }
-    .prod-card:active { background: #eff6ff; }
+    .prod-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; cursor: pointer; background: #fff; }
     .prod-name { font-size: 0.85rem; font-weight: 600; line-height: 1.2; height: 2.4em; overflow: hidden; }
     .prod-price { font-size: 0.95rem; color: #16a34a; font-weight: 700; margin-top: 4px; }
     .prod-stock { font-size: 0.75rem; color: #64748b; }
 
     .cart-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
     .cart-table th, .cart-table td { padding: 8px 4px; text-align: left; font-size: 0.85rem; border-bottom: 1px solid #f1f5f9; }
-    .cart-table th { color: #64748b; font-weight: 600; }
     .qty-btn { width: 24px; height: 24px; border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 4px; font-weight: bold; cursor: pointer; }
 
     .total-box { background: #f8fafc; border-radius: 8px; padding: 12px; margin-bottom: 12px; }
@@ -42,32 +38,17 @@
     .total-row.grand { font-size: 1.2rem; font-weight: 700; color: #0f172a; border-top: 1px dashed #cbd5e1; padding-top: 6px; margin-top: 6px; }
 
     .btn { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; text-align: center; }
-    .btn-primary { background: #2563eb; color: white; }
     .btn-success { background: #16a34a; color: white; }
     .btn-secondary { background: #64748b; color: white; }
-    .btn-danger { background: #dc2626; color: white; }
 
     .form-group { margin-bottom: 10px; }
     .form-group label { display: block; font-size: 0.8rem; font-weight: 600; color: #475569; margin-bottom: 4px; }
     .form-control { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; }
 
-    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #334155; color: white; padding: 10px 20px; border-radius: 20px; font-size: 0.85rem; display: none; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-    
+    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #334155; color: white; padding: 10px 20px; border-radius: 20px; font-size: 0.85rem; display: none; z-index: 1000; }
     .data-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
     .data-table th, .data-table td { padding: 8px 6px; text-align: left; border-bottom: 1px solid #e2e8f0; }
-    .data-table th { background: #f8fafc; color: #475569; }
-
-    .badge { padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
-    .badge-success { background: #dcfce7; color: #15803d; }
-    .badge-warning { background: #fef9c3; color: #a16207; }
-    .badge-danger { background: #fee2e2; color: #b91c1c; }
-
-    .modal-screen { position: fixed; top:0; left:0; right:0; bottom:0; background: rgba(15,23,42,0.8); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; }
-    .modal-box { background: white; padding: 24px; border-radius: 12px; width: 100%; max-width: 400px; }
-
     .stock-low { color: #dc2626; font-weight: bold; }
-    .loading-spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid #ffffff; border-radius: 50%; border-top-color: transparent; animation: spin 0.8s linear infinite; margin-right: 6px; vertical-align: middle; }
-    @keyframes spin { to { transform: rotate(360deg); } }
     .hidden { display: none !important; }
   </style>
 </head>
@@ -134,25 +115,14 @@
       <div class="card">
         <div class="card-title">
           <span>Ventas Recientes</span>
-          <button class="btn btn-secondary" style="width:auto; padding:4px 8px; font-size:0.75rem;" onclick="cargarHistorial(true)">
-            <span id="histLoading" class="loading-spinner hidden"></span>Refrescar
-          </button>
+          <button class="btn btn-secondary" style="width:auto; padding:4px 8px; font-size:0.75rem;" onclick="cargarHistorial(true)">Refrescar</button>
         </div>
         <div style="overflow-x:auto;">
           <table class="data-table" id="tablaHistorial">
             <thead>
-              <tr>
-                <th>ID</th>
-                <th>Fecha/Hora</th>
-                <th>Método</th>
-                <th>USD</th>
-                <th>BS</th>
-                <th>Acción</th>
-              </tr>
+              <tr><th>ID</th><th>Fecha/Hora</th><th>Método</th><th>USD</th><th>BS</th><th>Acción</th></tr>
             </thead>
-            <tbody>
-              <tr><td colspan="6" style="text-align:center; color:#64748b;">Cargando...</td></tr>
-            </tbody>
+            <tbody><tr><td colspan="6" style="text-align:center; color:#64748b;">Sin registros</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -163,24 +133,13 @@
       <div class="card">
         <div class="card-title">
           <span>Control de Inventario</span>
-          <button class="btn btn-secondary" style="width:auto; padding:4px 8px; font-size:0.75rem;" onclick="cargarInventario(true)">
-            <span id="invLoading" class="loading-spinner hidden"></span>Refrescar
-          </button>
+          <button class="btn btn-secondary" style="width:auto; padding:4px 8px; font-size:0.75rem;" onclick="cargarInventario(true)">Refrescar</button>
         </div>
         <input type="text" id="buscarInv" class="search-box" placeholder="Filtrar inventario..." oninput="filtrarTablaInventario()">
         <div style="overflow-x:auto; max-height:400px;">
           <table class="data-table" id="tablaInventario">
-            <thead>
-              <tr>
-                <th>Cód</th>
-                <th>Producto</th>
-                <th>Precio $</th>
-                <th>Stock</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td colspan="4" style="text-align:center; color:#64748b;">Cargando...</td></tr>
-            </tbody>
+            <thead><tr><th>Cód</th><th>Producto</th><th>Precio $</th><th>Stock</th></tr></thead>
+            <tbody><tr><td colspan="4" style="text-align:center; color:#64748b;">Cargando...</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -191,79 +150,14 @@
       <div class="card">
         <div class="card-title">
           <span>Cuentas por Cobrar</span>
-          <button class="btn btn-secondary" style="width:auto; padding:4px 8px; font-size:0.75rem;" onclick="cargarCreditos(true)">
-            <span id="creditosLoading" class="loading-spinner hidden"></span>Refrescar
-          </button>
+          <button class="btn btn-secondary" style="width:auto; padding:4px 8px; font-size:0.75rem;" onclick="cargarCreditos(true)">Refrescar</button>
         </div>
-        <div class="total-box" style="display:flex; justify-content:space-between; text-align:center; padding:8px;">
-          <div><div style="font-size:0.7rem; color:#64748b;">Pendiente Total</div><strong id="cred-total-usd" style="color:#dc2626;">$0.00</strong></div>
-          <div><div style="font-size:0.7rem; color:#64748b;">En BS</div><strong id="cred-total-bs" style="color:#2563eb;">0.00 BS</strong></div>
-          <div><div style="font-size:0.7rem; color:#64748b;">Deudores</div><strong id="cred-total-count">0</strong></div>
-        </div>
-        <input type="text" id="buscarCredito" class="search-box" placeholder="Buscar por cliente..." oninput="filtrarCreditos(this.value)">
-        <div id="credBusquedaInfo" style="font-size:0.8rem; color:#2563eb; margin-bottom:8px;"></div>
         <div style="overflow-x:auto;">
           <table class="data-table" id="tablaCreditos">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Fecha</th>
-                <th>Cliente</th>
-                <th>Total</th>
-                <th>Abonado</th>
-                <th>Saldo</th>
-                <th>Estado</th>
-                <th>Acción</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td colspan="8" style="text-align:center; color:#64748b;">Cargando...</td></tr>
-            </tbody>
+            <thead><tr><th>ID</th><th>Fecha</th><th>Cliente</th><th>Total</th><th>Saldo</th><th>Estado</th></tr></thead>
+            <tbody><tr><td colspan="6" style="text-align:center; color:#64748b;">Sin créditos</td></tr></tbody>
           </table>
         </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- MODAL PAGO -->
-  <div id="modalPago" class="modal-screen hidden">
-    <div class="modal-box" style="text-align:left;">
-      <h3 style="margin-bottom:12px;">Completar Venta</h3>
-      
-      <div class="form-group">
-        <label>Método de Pago</label>
-        <select id="metodoPago" class="form-control" onchange="toggleFormPago()">
-          <option value="EFECTIVO_USD">Efectivo USD ($)</option>
-          <option value="EFECTIVO_BS">Efectivo BS</option>
-          <option value="PAGO_MOVIL">Pago Móvil (BS)</option>
-          <option value="PUNTO">Punto de Débito (BS)</option>
-          <option value="MIXTO">Pago Mixto</option>
-          <option value="CREDITO">A Crédito (Fiar)</option>
-        </select>
-      </div>
-
-      <div id="divCliente" class="form-group hidden">
-        <label>Nombre del Cliente (Para Crédito)</label>
-        <input type="text" id="clienteNombre" class="form-control" placeholder="Ej: Juan Pérez">
-      </div>
-
-      <div id="divMontosMixtos" class="hidden">
-        <div class="form-group">
-          <label>Monto Pagado en USD ($)</label>
-          <input type="number" id="montoUSD" class="form-control" step="0.01" value="0">
-        </div>
-        <div class="form-group">
-          <label>Monto Pagado en BS</label>
-          <input type="number" id="montoBS" class="form-control" step="0.01" value="0">
-        </div>
-      </div>
-
-      <div style="margin-top:16px; display:flex; gap:8px;">
-        <button class="btn btn-secondary" style="flex:1;" onclick="cerrarModalPago()">Cancelar</button>
-        <button class="btn btn-success" style="flex:1;" id="btnProcesarVenta" onclick="procesarVenta()">
-          <span id="pagoSpinner" class="loading-spinner hidden"></span>Confirmar
-        </button>
       </div>
     </div>
   </div>
@@ -276,37 +170,6 @@
     var _carrito = [];
     var _tasa = 1;
     var _usuario = { nombre: "Cajero Principal", rol: "Cajero" };
-    var _invData = [];
-    var _credData = null;
-
-    var CACHE_PREFIX = 'pos_cache_';
-    var TTL_PRODUCTOS = 10 * 60 * 1000;
-    var TTL_HISTORIAL = 2 * 60 * 1000;
-    var TTL_INVENTARIO = 5 * 60 * 1000;
-    var TTL_CREDITOS = 3 * 60 * 1000;
-
-    function cacheGet(key){
-      try {
-        var raw = localStorage.getItem(CACHE_PREFIX + key);
-        if(!raw) return null;
-        var item = JSON.parse(raw);
-        if(Date.now() - item.ts > item.ttl){
-          localStorage.removeItem(CACHE_PREFIX + key);
-          return null;
-        }
-        return item.data;
-      } catch(e){ return null; }
-    }
-
-    function cacheSet(key, data, ttl){
-      try {
-        localStorage.setItem(CACHE_PREFIX + key, JSON.stringify({ ts: Date.now(), ttl: ttl, data: data }));
-      } catch(e){}
-    }
-
-    function cacheClear(key){
-      try { localStorage.removeItem(CACHE_PREFIX + key); } catch(e){}
-    }
 
     document.addEventListener('DOMContentLoaded', function(){
       document.getElementById('fechaHoy').textContent = new Date().toLocaleDateString('es-VE');
@@ -315,44 +178,30 @@
 
     async function inicializarApp(){
       try {
-        var tasaRes = await llamarAPI('obtenerTasa');
-        if(tasaRes && tasaRes.tasa){
-          _tasa = tasaRes.tasa;
+        var res = await llamarAPI('obtenerTasa');
+        if(res && res.tasa){
+          _tasa = res.tasa;
           document.getElementById('tasaBcv').textContent = Number(_tasa).toFixed(2);
         }
-      } catch(e) {
-        console.log('No se pudo obtener la tasa en tiempo real, usando valor base');
-      }
+      } catch(e) {}
       cargarProductos();
     }
 
     function switchTab(tab){
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      
       event.target.classList.add('active');
       document.getElementById('tab-' + tab).classList.add('active');
-
-      if(tab === 'historial') cargarHistorial();
-      if(tab === 'inventario') cargarInventario();
-      if(tab === 'creditos') cargarCreditos();
     }
 
-    async function cargarProductos(forzar){
-      var cached = !forzar && cacheGet('productos');
-      if(cached){
-        _productos = cached;
-        renderProductos(_productos);
-        return;
-      }
+    async function cargarProductos(){
       try {
         var prods = await llamarAPI('obtenerProductos');
         if(prods && Array.isArray(prods)){
           _productos = prods;
-          cacheSet('productos', prods, TTL_PRODUCTOS);
           renderProductos(_productos);
         }
-      } catch(e){ toast('Error al cargar productos', 'error'); }
+      } catch(e){}
     }
 
     function renderProductos(list){
@@ -366,11 +215,7 @@
         var div = document.createElement('div');
         div.className = 'prod-card';
         div.onclick = () => agregarAlCarrito(p);
-        div.innerHTML = `
-          <div class="prod-name">${p.nombre}</div>
-          <div class="prod-price">$${Number(p.precioUSD).toFixed(2)}</div>
-          <div class="prod-stock ${p.stock <= 3 ? 'stock-low':''}">Stock: ${p.stock}</div>
-        `;
+        div.innerHTML = `<div class="prod-name">${p.nombre}</div><div class="prod-price">$${Number(p.precioUSD).toFixed(2)}</div><div class="prod-stock">Stock: ${p.stock}</div>`;
         container.appendChild(div);
       });
     }
@@ -384,47 +229,14 @@
     function agregarAlCarrito(prod){
       var item = _carrito.find(c => c.codigo === prod.codigo);
       if(item){
-        if(item.cantidad + 1 > prod.stock){
-          toast('Excede el stock disponible', 'error');
-          return;
-        }
         item.cantidad++;
       } else {
-        if(prod.stock < 1){
-          toast('Producto sin stock', 'error');
-          return;
-        }
-        _carrito.push({
-          codigo: prod.codigo,
-          nombre: prod.nombre,
-          precioUSD: prod.precioUSD,
-          cantidad: 1,
-          stockMax: prod.stock
-        });
+        _carrito.push({ codigo: prod.codigo, nombre: prod.nombre, precioUSD: prod.precioUSD, cantidad: 1 });
       }
       renderCarrito();
     }
 
-    function cambiarCantidad(index, delta){
-      var item = _carrito[index];
-      if(!item) return;
-      var nuevaCant = item.cantidad + delta;
-      if(nuevaCant > item.stockMax){
-        toast('Alcanzó el límite de stock', 'error');
-        return;
-      }
-      if(nuevaCant <= 0){
-        _carrito.splice(index, 1);
-      } else {
-        item.cantidad = nuevaCant;
-      }
-      renderCarrito();
-    }
-
-    function vaciarCarrito(){
-      _carrito = [];
-      renderCarrito();
-    }
+    function vaciarCarrito(){ _carrito = []; renderCarrito(); }
 
     function renderCarrito(){
       var tbody = document.getElementById('cartBody');
@@ -436,262 +248,17 @@
         document.getElementById('cartTotalBS').textContent = '0.00 BS';
         return;
       }
-
       var subtotal = 0;
-      _carrito.forEach((item, index) => {
+      _carrito.forEach((item) => {
         var totalItem = item.cantidad * item.precioUSD;
         subtotal += totalItem;
-
         var tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${item.nombre}</td>
-          <td style="text-align:center;">
-            <button class="qty-btn" onclick="cambiarCantidad(${index}, -1)">-</button>
-            <span style="margin:0 4px;">${item.cantidad}</span>
-            <button class="qty-btn" onclick="cambiarCantidad(${index}, 1)">+</button>
-          </td>
-          <td style="text-align:right;">$${Number(item.precioUSD).toFixed(2)}</td>
-          <td style="text-align:right;">$${totalItem.toFixed(2)}</td>
-          <td style="text-align:center;"><button style="border:none; background:none; color:#dc2626; cursor:pointer;" onclick="cambiarCantidad(${index}, -${item.cantidad})">✕</button></td>
-        `;
+        tr.innerHTML = `<td>${item.nombre}</td><td style="text-align:center;">${item.cantidad}</td><td style="text-align:right;">$${Number(item.precioUSD).toFixed(2)}</td><td style="text-align:right;">$${totalItem.toFixed(2)}</td><td></td>`;
         tbody.appendChild(tr);
       });
-
-      var totalBS = subtotal * _tasa;
       document.getElementById('cartSubtotal').textContent = '$' + subtotal.toFixed(2);
       document.getElementById('cartTotalUSD').textContent = '$' + subtotal.toFixed(2);
-      document.getElementById('cartTotalBS').textContent = totalBS.toFixed(2) + ' BS';
-    }
-
-    function abrirModalPago(){
-      if(_carrito.length === 0) return toast('El carrito está vacío', 'error');
-      document.getElementById('modalPago').classList.remove('hidden');
-      toggleFormPago();
-    }
-
-    function cerrarModalPago(){
-      document.getElementById('modalPago').classList.add('hidden');
-    }
-
-    function toggleFormPago(){
-      var m = document.getElementById('metodoPago').value;
-      document.getElementById('divCliente').classList.toggle('hidden', m !== 'CREDITO');
-      document.getElementById('divMontosMixtos').classList.toggle('hidden', m !== 'MIXTO');
-    }
-
-    async function procesarVenta(){
-      var metodo = document.getElementById('metodoPago').value;
-      var cliente = document.getElementById('clienteNombre').value;
-      var btn = document.getElementById('btnProcesarVenta');
-      var sp = document.getElementById('pagoSpinner');
-
-      if(metodo === 'CREDITO' && !cliente.trim()){
-        return toast('Ingrese el nombre del cliente', 'error');
-      }
-
-      var totalUSD = _carrito.reduce((s, i) => s + (i.cantidad * i.precioUSD), 0);
-      var totalBS = totalUSD * _tasa;
-
-      var ventaData = {
-        items: _carrito,
-        totalUSD: totalUSD,
-        totalBS: totalBS,
-        tasa: _tasa,
-        metodoPago: metodo,
-        cliente: cliente,
-        usuario: _usuario.nombre,
-        montoPagoUSD: metodo === 'MIXTO' ? parseFloat(document.getElementById('montoUSD').value||0) : totalUSD,
-        montoPagoBS: metodo === 'MIXTO' ? parseFloat(document.getElementById('montoBS').value||0) : totalBS
-      };
-
-      btn.disabled = true;
-      sp.classList.remove('hidden');
-
-      try {
-        var res = await llamarAPI('registrarVenta', ventaData);
-        if(res && res.success){
-          toast('¡Venta realizada con éxito!');
-          vaciarCarrito();
-          cerrarModalPago();
-          cacheClear('productos');
-          cacheClear('historial');
-          cacheClear('inventario');
-          cacheClear('creditos');
-          cargarProductos(true);
-        } else {
-          toast('Error: ' + (res.message || 'No se pudo procesar'), 'error');
-        }
-      } catch(e){
-        toast('Error de red/servidor', 'error');
-      } finally {
-        btn.disabled = false;
-        sp.classList.add('hidden');
-      }
-    }
-
-    async function cargarHistorial(forzar){
-      var cached = !forzar && cacheGet('historial');
-      if(cached){ renderHistorial(cached); return; }
-      var ld = document.getElementById('histLoading');
-      if(ld) ld.classList.remove('hidden');
-      try {
-        var data = await llamarAPI('obtenerHistorial');
-        if(ld) ld.classList.add('hidden');
-        if(data && Array.isArray(data)){
-          cacheSet('historial', data, TTL_HISTORIAL);
-          renderHistorial(data);
-        }
-      } catch(e){ if(ld) ld.classList.add('hidden'); }
-    }
-
-    function renderHistorial(list){
-      var tbody = document.querySelector('#tablaHistorial tbody');
-      tbody.innerHTML = '';
-      if(!list || list.length === 0){
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#64748b;">Sin ventas hoy</td></tr>';
-        return;
-      }
-      list.forEach(v => {
-        var tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${v.id}</td>
-          <td>${v.fecha}</td>
-          <td><span class="badge badge-warning">${v.metodo}</span></td>
-          <td>$${Number(v.totalUSD).toFixed(2)}</td>
-          <td>${Number(v.totalBS).toFixed(2)} BS</td>
-          <td><button class="btn btn-danger" style="padding:2px 6px; font-size:0.7rem;" onclick="anularVenta('${v.id}')">Anular</button></td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    async function anularVenta(id){
-      if(!confirm('¿Seguro que desea anular la venta ' + id + '?')) return;
-      try {
-        var res = await llamarAPI('anularVenta', { id: id, usuario: _usuario.nombre });
-        if(res && res.success){
-          toast('Venta anulada');
-          cacheClear('historial');
-          cacheClear('productos');
-          cacheClear('inventario');
-          cargarHistorial(true);
-        } else {
-          toast('No se pudo anular', 'error');
-        }
-      } catch(e){ toast('Error al anular', 'error'); }
-    }
-
-    async function cargarInventario(forzar){
-      var cached = !forzar && cacheGet('inventario');
-      if(cached){ _invData = cached; renderInventario(cached); return; }
-      var ld = document.getElementById('invLoading');
-      if(ld) ld.classList.remove('hidden');
-      try {
-        var data = await llamarAPI('obtenerProductos');
-        if(ld) ld.classList.add('hidden');
-        if(data && Array.isArray(data)){
-          _invData = data;
-          cacheSet('inventario', data, TTL_INVENTARIO);
-          renderInventario(data);
-        }
-      } catch(e){ if(ld) ld.classList.add('hidden'); }
-    }
-
-    function renderInventario(list){
-      var tbody = document.querySelector('#tablaInventario tbody');
-      tbody.innerHTML = '';
-      if(!list || list.length === 0){
-        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#64748b;">Sin datos</td></tr>';
-        return;
-      }
-      list.forEach(p => {
-        var tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${p.codigo}</td>
-          <td>${p.nombre}</td>
-          <td>$${Number(p.precioUSD).toFixed(2)}</td>
-          <td class="${p.stock <= 3 ? 'stock-low':''}">${p.stock}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function filtrarTablaInventario(){
-      var q = document.getElementById('buscarInv').value.toLowerCase();
-      var filt = _invData.filter(p => p.nombre.toLowerCase().includes(q) || String(p.codigo).toLowerCase().includes(q));
-      renderInventario(filt);
-    }
-
-    function toast(msg, type){
-      var t = document.getElementById('toast');
-      t.textContent = msg;
-      t.style.background = type === 'error' ? '#dc2626' : '#334155';
-      t.style.display = 'block';
-      setTimeout(() => { t.style.display = 'none'; }, 3000);
-    }
-
-    async function cargarCreditos(forzar){
-      var cached = !forzar && cacheGet('creditos');
-      if(cached){ renderCreditos(cached); return; }
-      var ld = document.getElementById('creditosLoading');
-      if(ld) ld.classList.remove('hidden');
-      document.querySelector('#tablaCreditos tbody').innerHTML = '<tr><td colspan="8" style="text-align:center;color:#64748b;">Cargando...</td></tr>';
-      try {
-        var data = await llamarAPI('obtenerCreditos', { pendientesSolo: true });
-        if(ld) ld.classList.add('hidden');
-        if(!data) data = { totalUSD: 0, totalBS: 0, count: 0, rows: [] };
-        cacheSet('creditos', data, TTL_CREDITOS);
-        renderCreditos(data);
-      } catch(err) {
-        if(ld) ld.classList.add('hidden');
-        document.querySelector('#tablaCreditos tbody').innerHTML = '<tr><td colspan="8" style="color:#dc2626;text-align:center;">Error: ' + (err.message || err) + '</td></tr>';
-        toast('Error creditos: ' + (err.message || err), 'error');
-      }
-    }
-
-    function renderCreditos(data){
-      _credData = data;
-      document.getElementById('cred-total-usd').textContent = Number(data.totalUSD || 0).toFixed(2);
-      document.getElementById('cred-total-bs').textContent = Number(data.totalBS || 0).toFixed(2);
-      document.getElementById('cred-total-count').textContent = Number(data.count || 0);
-      var bc = document.getElementById('buscarCredito');
-      var info = document.getElementById('credBusquedaInfo');
-      if(bc && bc.value){ filtrarCreditos(bc.value); return; }
-      if(info) info.textContent = '';
-      pintarCreditos(data.rows || []);
-    }
-
-    function pintarCreditos(rows){
-      var tbody = document.querySelector('#tablaCreditos tbody');
-      if(!rows || rows.length === 0){
-        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#64748b;">Sin creditos</td></tr>';
-        return;
-      }
-      var frag = document.createDocumentFragment();
-      rows.forEach(function(r){
-        var tr = document.createElement('tr');
-        tr.innerHTML = '<td>' + (r.id || '') + '</td><td>' + (r.fecha || '') + '</td><td>' + (r.cliente || '') + '</td>' +
-          '<td>$' + Number(r.totalUSD || 0).toFixed(2) + '</td>' +
-          '<td>$' + Number(r.abonadoUSD || 0).toFixed(2) + '</td>' +
-          '<td class="stock-low">$' + Number(r.saldoUSD || 0).toFixed(2) + '</td>' +
-          '<td><span class="badge ' + (r.estado === 'PENDIENTE' ? 'badge-danger' : 'badge-success') + '">' + r.estado + '</span></td>' +
-          '<td><button class="btn btn-success" style="padding:4px 10px;" onclick="abonarCredito(' + r.id + ',' + Number(r.saldoUSD) + ')">Abonar</button></td>';
-        frag.appendChild(tr);
-      });
-      tbody.innerHTML = '';
-      tbody.appendChild(frag);
-    }
-
-    function filtrarCreditos(q){
-      if(!_credData) return;
-      q = (q || '').toLowerCase().trim();
-      var rows = _credData.rows || [];
-      var info = document.getElementById('credBusquedaInfo');
-      if(!q){ pintarCreditos(rows); if(info) info.textContent = ''; return; }
-      var filt = rows.filter(function(r){ return String(r.cliente || '').toLowerCase().indexOf(q) !== -1; });
-      var deuda = filt.reduce(function(s, r){ return s + Number(r.saldoUSD || 0); }, 0);
-      pintarCreditos(filt);
-      if(info) info.innerHTML = 'Deuda de coincidencias: <strong>$' + deuda.toFixed(2) + '</strong> en ' + filt.length + ' credito(s).';
+      document.getElementById('cartTotalBS').textContent = (subtotal * _tasa).toFixed(2) + ' BS';
     }
   </script>
 </body>
