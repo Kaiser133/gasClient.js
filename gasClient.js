@@ -3,7 +3,7 @@
  ******************************************************************************/
 
 // ⚠️ REEMPLAZA ESTA URL CON LA URL DE TU WEB APP DESPLEGADA EN GOOGLE APPS SCRIPT
-const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyJCgBtmwUxvV-xUR_hdI02ip0kDDX01BQSjQCh6iNdaVVEZKpJfV_vcnkk2EZGPpzE/exec";
+const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyJCgBtmwUxvV-xUR_hdI02ip0kDDX01BQSjQCh6iNdaVVEZKpJfV_vcnkk2EZGPpzE/exec';
 
 /**
  * Función centralizada que sustituye a google.script.run
