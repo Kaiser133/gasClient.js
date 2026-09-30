@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Punto de Venta</title>
+  <title>Punto de Venta - El Resuelve de la Fortaleza</title>
   <style>
     * { box-sizing: border-box; margin:0; padding:0; -webkit-tap-highlight-color: transparent; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f1f5f9; color: #1e293b; padding-bottom: 70px; }
@@ -50,14 +50,33 @@
     .data-table th, .data-table td { padding: 8px 6px; text-align: left; border-bottom: 1px solid #e2e8f0; }
     .stock-low { color: #dc2626; font-weight: bold; }
     .hidden { display: none !important; }
+
+    /* Modal de Login / PIN */
+    .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #1e3a8a; display: flex; align-items: center; justify-content: center; z-index: 1000; }
+    .login-card { background: white; padding: 24px; border-radius: 12px; width: 90%; max-width: 320px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .login-card h2 { margin-bottom: 8px; font-size: 1.2rem; }
+    .login-card p { font-size: 0.85rem; color: #64748b; margin-bottom: 16px; }
+    .error-msg { color: #dc2626; font-size: 0.8rem; margin-top: 10px; }
   </style>
 </head>
 <body>
 
+  <!-- MODAL DE ACCESO / LOGIN POR PIN -->
+  <div id="loginOverlay" class="overlay">
+    <div class="login-card">
+      <div style="font-size:2rem; margin-bottom: 8px;">🔐</div>
+      <h2>Ingresar</h2>
+      <p>Escribe tu clave para entrar</p>
+      <input type="password" id="pinInput" class="search-box" style="text-align: center; letter-spacing: 4px; font-size: 1.2rem;" placeholder="• • • •" onkeypress="if(event.key==='Enter') enviarLoginPin()">
+      <button class="btn btn-success" onclick="enviarLoginPin()">Entrar</button>
+      <div id="loginError" class="error-msg"></div>
+    </div>
+  </div>
+
   <div class="header">
     <div>
       <h1>La Parada del Resuelve</h1>
-      <div style="font-size:0.7rem; opacity:0.8;" id="usuarioStatus">Cajero Principal</div>
+      <div style="font-size:0.7rem; opacity:0.8;" id="usuarioStatus">No identificado</div>
     </div>
     <div class="header-info">
       <div>Tasa: <strong id="tasaBcv">--</strong> BS</div>
@@ -67,10 +86,10 @@
 
   <div class="container">
     <div class="nav-tabs">
-      <button class="tab-btn active" onclick="switchTab('ventas')">Ventas</button>
-      <button class="tab-btn" onclick="switchTab('historial')">Historial</button>
-      <button class="tab-btn" onclick="switchTab('inventario')">Inventario</button>
-      <button class="tab-btn" onclick="switchTab('creditos')">Créditos</button>
+      <button class="tab-btn active" onclick="switchTab('ventas', event)">Ventas</button>
+      <button class="tab-btn" onclick="switchTab('historial', event)">Historial</button>
+      <button class="tab-btn" onclick="switchTab('inventario', event)">Inventario</button>
+      <button class="tab-btn" onclick="switchTab('creditos', event)">Créditos</button>
     </div>
 
     <!-- TAB VENTAS -->
@@ -106,7 +125,7 @@
           <div class="total-row grand" style="color:#2563eb; font-size:1rem; border:none; margin:0; padding:0;"><span>Total BS:</span><span id="cartTotalBS">0.00 BS</span></div>
         </div>
 
-        <button class="btn btn-success" onclick="abrirModalPago()">Cobrar / Registrar Venta</button>
+        <button class="btn btn-success" onclick="registrarVentaActual()">Cobrar / Registrar Venta</button>
       </div>
     </div>
 
@@ -114,15 +133,15 @@
     <div id="tab-historial" class="tab-content">
       <div class="card">
         <div class="card-title">
-          <span>Ventas Recientes</span>
-          <button class="btn btn-secondary" style="width:auto; padding:4px 8px; font-size:0.75rem;" onclick="cargarHistorial(true)">Refrescar</button>
+          <span>Compras Recientes</span>
+          <button class="btn btn-secondary" style="width:auto; padding:4px 8px; font-size:0.75rem;" onclick="cargarHistorial()">Refrescar</button>
         </div>
         <div style="overflow-x:auto;">
           <table class="data-table" id="tablaHistorial">
             <thead>
-              <tr><th>ID</th><th>Fecha/Hora</th><th>Método</th><th>USD</th><th>BS</th><th>Acción</th></tr>
+              <tr><th>ID</th><th>Fecha</th><th>Proveedor</th><th>Producto</th><th>Cant</th><th>Total $</th></tr>
             </thead>
-            <tbody><tr><td colspan="6" style="text-align:center; color:#64748b;">Sin registros</td></tr></tbody>
+            <tbody id="historialBody"><tr><td colspan="6" style="text-align:center; color:#64748b;">Sin registros</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -133,13 +152,13 @@
       <div class="card">
         <div class="card-title">
           <span>Control de Inventario</span>
-          <button class="btn btn-secondary" style="width:auto; padding:4px 8px; font-size:0.75rem;" onclick="cargarInventario(true)">Refrescar</button>
+          <button class="btn btn-secondary" style="width:auto; padding:4px 8px; font-size:0.75rem;" onclick="cargarProductos()">Refrescar</button>
         </div>
         <input type="text" id="buscarInv" class="search-box" placeholder="Filtrar inventario..." oninput="filtrarTablaInventario()">
         <div style="overflow-x:auto; max-height:400px;">
           <table class="data-table" id="tablaInventario">
             <thead><tr><th>Cód</th><th>Producto</th><th>Precio $</th><th>Stock</th></tr></thead>
-            <tbody><tr><td colspan="4" style="text-align:center; color:#64748b;">Cargando...</td></tr></tbody>
+            <tbody id="inventarioBody"><tr><td colspan="4" style="text-align:center; color:#64748b;">Cargando...</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -150,12 +169,12 @@
       <div class="card">
         <div class="card-title">
           <span>Cuentas por Cobrar</span>
-          <button class="btn btn-secondary" style="width:auto; padding:4px 8px; font-size:0.75rem;" onclick="cargarCreditos(true)">Refrescar</button>
+          <button class="btn btn-secondary" style="width:auto; padding:4px 8px; font-size:0.75rem;" onclick="cargarCreditos()">Refrescar</button>
         </div>
         <div style="overflow-x:auto;">
           <table class="data-table" id="tablaCreditos">
-            <thead><tr><th>ID</th><th>Fecha</th><th>Cliente</th><th>Total</th><th>Saldo</th><th>Estado</th></tr></thead>
-            <tbody><tr><td colspan="6" style="text-align:center; color:#64748b;">Sin créditos</td></tr></tbody>
+            <thead><tr><th>ID</th><th>Fecha</th><th>Cliente</th><th>Total $</th><th>Saldo$</th><th>Estado</th></tr></thead>
+            <tbody id="creditosBody"><tr><td colspan="6" style="text-align:center; color:#64748b;">Sin créditos</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -169,12 +188,53 @@
     var _productos = [];
     var _carrito = [];
     var _tasa = 1;
-    var _usuario = { nombre: "Cajero Principal", rol: "Cajero" };
+    var _token = '';
+    var _usuario = { nombre: "", rol: "" };
 
     document.addEventListener('DOMContentLoaded', function(){
       document.getElementById('fechaHoy').textContent = new Date().toLocaleDateString('es-VE');
-      inicializarApp();
     });
+
+    function toast(msg, tipo) {
+      var t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.background = (tipo === 'err') ? '#dc2626' : '#16a34a';
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 3000);
+    }
+
+    function enviarLoginPin(){
+      var pinInput = document.getElementById('pinInput');
+      var pin = (pinInput.value || '').trim();
+      var err = document.getElementById('loginError');
+      if (err) err.textContent = '';
+      
+      if (!pin) {
+        if (err) err.textContent = 'Escribe tu clave.';
+        return;
+      }
+
+      var procesarRespuesta = function(res) {
+        if (res && res.ok) {
+          _token = res.token;
+          _usuario = { nombre: res.nombre, rol: res.rol };
+          document.getElementById('usuarioStatus').textContent = res.nombre + ' (' + res.rol + ')';
+          document.getElementById('loginOverlay').classList.add('hidden');
+          toast('Bienvenido ' + res.nombre);
+          inicializarApp();
+        } else {
+          if (err) err.textContent = (res && res.mensaje) ? res.mensaje : 'Clave incorrecta.';
+        }
+      };
+
+      if (typeof llamarAPI === 'function') {
+        llamarAPI('loginConPin', { pin: pin })
+          .then(procesarRespuesta)
+          .catch(function(e) { if (err) err.textContent = 'Error: ' + (e.message || e); });
+      } else if (typeof google !== 'undefined' && google.script && google.script.run) {
+        google.script.run.withSuccessHandler(procesarRespuesta).loginConPin(pin);
+      }
+    }
 
     async function inicializarApp(){
       try {
@@ -187,11 +247,14 @@
       cargarProductos();
     }
 
-    function switchTab(tab){
+    function switchTab(tab, evt){
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      event.target.classList.add('active');
+      if(evt) evt.target.classList.add('active');
       document.getElementById('tab-' + tab).classList.add('active');
+
+      if(tab === 'historial') cargarHistorial();
+      if(tab === 'creditos') cargarCreditos();
     }
 
     async function cargarProductos(){
@@ -200,6 +263,7 @@
         if(prods && Array.isArray(prods)){
           _productos = prods;
           renderProductos(_productos);
+          renderTablaInventario(_productos);
         }
       } catch(e){}
     }
@@ -212,26 +276,56 @@
         return;
       }
       list.forEach(p => {
+        var desc = p.descripcion || p.nombre || '';
         var div = document.createElement('div');
         div.className = 'prod-card';
         div.onclick = () => agregarAlCarrito(p);
-        div.innerHTML = `<div class="prod-name">${p.nombre}</div><div class="prod-price">$${Number(p.precioUSD).toFixed(2)}</div><div class="prod-stock">Stock: ${p.stock}</div>`;
+        div.innerHTML = `<div class="prod-name">${desc}</div><div class="prod-price">$${Number(p.precioUSD).toFixed(2)}</div><div class="prod-stock">Stock: ${p.stock}</div>`;
         container.appendChild(div);
+      });
+    }
+
+    function renderTablaInventario(list){
+      var tbody = document.getElementById('inventarioBody');
+      tbody.innerHTML = '';
+      if(!list || list.length === 0){
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#64748b;">Sin productos</td></tr>';
+        return;
+      }
+      list.forEach(p => {
+        var desc = p.descripcion || p.nombre || '';
+        var tr = document.createElement('tr');
+        var stockClass = (p.stock <= 5) ? 'class="stock-low"' : '';
+        tr.innerHTML = `<td>${p.codigo}</td><td>${desc}</td><td>$${Number(p.precioUSD).toFixed(2)}</td><td ${stockClass}>${p.stock}</td>`;
+        tbody.appendChild(tr);
       });
     }
 
     function filtrarProductos(){
       var q = document.getElementById('buscarProducto').value.toLowerCase();
-      var filt = _productos.filter(p => p.nombre.toLowerCase().includes(q) || String(p.codigo).toLowerCase().includes(q));
+      var filt = _productos.filter(p => {
+        var desc = (p.descripcion || p.nombre || '').toLowerCase();
+        return desc.includes(q) || String(p.codigo).toLowerCase().includes(q);
+      });
       renderProductos(filt);
+    }
+
+    function filtrarTablaInventario(){
+      var q = document.getElementById('buscarInv').value.toLowerCase();
+      var filt = _productos.filter(p => {
+        var desc = (p.descripcion || p.nombre || '').toLowerCase();
+        return desc.includes(q) || String(p.codigo).toLowerCase().includes(q);
+      });
+      renderTablaInventario(filt);
     }
 
     function agregarAlCarrito(prod){
       var item = _carrito.find(c => c.codigo === prod.codigo);
+      var desc = prod.descripcion || prod.nombre || '';
       if(item){
         item.cantidad++;
       } else {
-        _carrito.push({ codigo: prod.codigo, nombre: prod.nombre, precioUSD: prod.precioUSD, cantidad: 1 });
+        _carrito.push({ codigo: prod.codigo, descripcion: desc, precioUSD: prod.precioUSD, cantidad: 1 });
       }
       renderCarrito();
     }
@@ -253,12 +347,73 @@
         var totalItem = item.cantidad * item.precioUSD;
         subtotal += totalItem;
         var tr = document.createElement('tr');
-        tr.innerHTML = `<td>${item.nombre}</td><td style="text-align:center;">${item.cantidad}</td><td style="text-align:right;">$${Number(item.precioUSD).toFixed(2)}</td><td style="text-align:right;">$${totalItem.toFixed(2)}</td><td></td>`;
+        tr.innerHTML = `<td>${item.descripcion}</td><td style="text-align:center;">${item.cantidad}</td><td style="text-align:right;">$${Number(item.precioUSD).toFixed(2)}</td><td style="text-align:right;">$${totalItem.toFixed(2)}</td><td></td>`;
         tbody.appendChild(tr);
       });
       document.getElementById('cartSubtotal').textContent = '$' + subtotal.toFixed(2);
       document.getElementById('cartTotalUSD').textContent = '$' + subtotal.toFixed(2);
       document.getElementById('cartTotalBS').textContent = (subtotal * _tasa).toFixed(2) + ' BS';
+    }
+
+    async function registrarVentaActual(){
+      if(_carrito.length === 0){
+        toast('El carrito está vacío', 'err');
+        return;
+      }
+      var payload = {
+        cliente: "GENÉRICO",
+        metodo: "EFECTIVO USD",
+        moneda: "USD",
+        productos: _carrito,
+        _token: _token
+      };
+      
+      try {
+        var res = await llamarAPI('registrarVenta', payload);
+        if(res && res.ok){
+          toast('Venta registrada con éxito');
+          vaciarCarrito();
+          cargarProductos();
+        } else {
+          toast((res && res.mensaje) ? res.mensaje : 'Error al registrar venta', 'err');
+        }
+      } catch(e){
+        toast('Error de conexión', 'err');
+      }
+    }
+
+    async function cargarHistorial(){
+      try {
+        var data = await llamarAPI('obtenerHistorial');
+        var tbody = document.getElementById('historialBody');
+        tbody.innerHTML = '';
+        if(data && Array.isArray(data) && data.length > 0){
+          data.forEach(r => {
+            var tr = document.createElement('tr');
+            tr.innerHTML = `<td>${r.id}</td><td>${r.fecha}</td><td>${r.proveedor}</td><td>${r.descripcion}</td><td>${r.cantidad}</td><td>$${Number(r.totalUSD).toFixed(2)}</td>`;
+            tbody.appendChild(tr);
+          });
+        } else {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#64748b;">Sin registros</td></tr>';
+        }
+      } catch(e){}
+    }
+
+    async function cargarCreditos(){
+      try {
+        var res = await llamarAPI('obtenerCreditos', { pendientesSolo: true });
+        var tbody = document.getElementById('creditosBody');
+        tbody.innerHTML = '';
+        if(res && res.rows && res.rows.length > 0){
+          res.rows.forEach(r => {
+            var tr = document.createElement('tr');
+            tr.innerHTML = `<td>${r.id}</td><td>${r.fecha}</td><td>${r.cliente}</td><td>$${Number(r.totalUSD).toFixed(2)}</td><td>$${Number(r.saldoUSD).toFixed(2)}</td><td>${r.estado}</td>`;
+            tbody.appendChild(tr);
+          });
+        } else {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#64748b;">Sin créditos pendientes</td></tr>';
+        }
+      } catch(e){}
     }
   </script>
 </body>
