@@ -2,7 +2,7 @@
  * gasClient.js — CONECTOR NETLIFY A GOOGLE APPS SCRIPT
  ******************************************************************************/
 
-var GAS_URL = "TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI";
+var GAS_URL = "https://script.google.com/macros/s/AKfycbyJCgBtmwUxvV-xUR_hdI02ip0kDDX01BQSjQCh6iNdaVVEZKpJfV_vcnkk2EZGPpzE/exec";
 
 async function llamarAPI(action, payload) {
   payload = payload || {};
